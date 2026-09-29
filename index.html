@@ -412,7 +412,18 @@ const SITES = [
   { title: "Nexa", category: "SaaS", tags: ["dark", "minimal"], description: "Dark crypto dashboard with portfolio value, segmented supply meters, protocol stats and a thin-line price chart.", color: "#131312", image: "images/nexa.jpg", added: "2026-09-29" },
   { title: "PvX Partners", category: "SaaS", tags: ["dark", "3D"], description: "Gaming insights hero with two-tone headline type and glowing isometric cards on a dark green grid.", color: "#253332", image: "images/pvx-partners.jpg", added: "2026-09-29" },
   { title: "QClay Design Courses", category: "Education", tags: ["colorful", "3D"], description: "UI design course page with a soft pink 3D tree on a violet gradient, a floating pricing card and a ticker strip.", color: "#af9ec6", image: "images/qclay-design.jpg", added: "2026-09-29" },
-  { title: "Stories in", category: "Agency", tags: ["playful", "illustrated", "motion"], description: "Studio homepage where a bold headline runs into a line of icon glyphs above a fanned stack of artwork cards.", color: "#dcdbd9", image: "images/stories-in.jpg", added: "2026-09-29" }
+  { title: "Stories in", category: "Agency", tags: ["playful", "illustrated", "motion"], description: "Studio homepage where a bold headline runs into a line of icon glyphs above a fanned stack of artwork cards.", color: "#dcdbd9", image: "images/stories-in.jpg", added: "2026-09-29" },
+  // Found online on 2026-09-29 from the Awwwards "Minimal" collection. Colors are approximate placeholders.
+  { title: "Aspen Search", url: "https://www.aspensearch.com", category: "Agency", tags: ["minimal", "editorial"], description: "Executive search firm with a light, quiet layout: clean sans type, team photos and client logos in calm sections. Awwwards Site of the Day.", color: "#f1f0ec", added: "2026-09-29" },
+  { title: "HAVU", url: "https://www.havu.cc/en", category: "Agency", tags: ["minimal", "editorial"], description: "AI-native design studio that signs off with \"less is more\" and means it: type and whitespace do almost all the work.", color: "#efefec", added: "2026-09-29" },
+  { title: "DVO", url: "https://dvo.it", category: "Brand", tags: ["minimal", "editorial"], description: "Italian office furniture maker showing its projects in large photography, near-black accents and a lot of air.", color: "#1c1c1c", added: "2026-09-29" },
+  { title: "Velaa Private Island", url: "https://www.velaaprivateisland.com", category: "Brand", tags: ["minimal", "editorial"], description: "Maldives resort site that lets full-bleed ocean photography and video lead, framed by elegant type and a neutral palette.", color: "#e6dfd2", added: "2026-09-29" },
+  { title: "studiors", url: "https://studiors.be", category: "Agency", tags: ["minimal", "dark", "motion"], description: "Belgian web studio on a near-black page, with project videos in a tight grid and motion used to show the craft.", color: "#0e0e0d", added: "2026-09-29" },
+  { title: "Whiteout · An Ascent", url: "https://whiteout.overvac.com", category: "Experience", tags: ["minimal", "dark", "3D", "motion"], description: "Scroll-driven climb of Everest through a procedural WebGL mountain, with sparse type marking each elevation.", color: "#0b1016", added: "2026-09-29" },
+  { title: "Font Previewer", url: "https://fontwidget.com", category: "SaaS", tags: ["minimal"], description: "Bookmarklet for testing fonts on any site. A plain step-by-step page with one orange accent and a single product image.", color: "#ff5722", added: "2026-09-29" },
+  { title: "Maison des Elites", url: "https://mdebeauty.com", category: "E-commerce", tags: ["minimal", "editorial"], description: "Luxury skincare on white, pairing serif and sans type with column motifs so products read like gallery pieces.", color: "#f6f3ee", added: "2026-09-29" },
+  { title: "DRĄSA Studio", url: "https://drasa.uk", category: "Agency", tags: ["minimal", "colorful"], description: "London research and design studio: a light, clean layout with one hot pink accent carrying the brand.", color: "#ff48a4", added: "2026-09-29" },
+  { title: "Brandon Yasin", url: "https://brandonyasin.com", category: "Portfolio", tags: ["minimal", "editorial"], description: "Danish creative director's portfolio in neutral tones, with a sans-serif grid of carefully curated project photography.", color: "#e9e9e7", added: "2026-09-29" }
 ];
 
 const STORE_FAV = "webinsp:favorites";
@@ -567,13 +578,14 @@ const TAG_NOTES = {
   "3D": "rendered 3D objects or depth as the focal point",
   illustrated: "custom illustration carrying the brand voice"
 };
-const PAGE_KIND = { SaaS: "product landing page", "E-commerce": "online store homepage", Agency: "studio homepage", Portfolio: "personal portfolio", Blog: "blog homepage", Education: "course landing page" };
+const PAGE_KIND = { Brand: "brand homepage", Experience: "interactive web experience", SaaS: "product landing page", "E-commerce": "online store homepage", Agency: "studio homepage", Portfolio: "personal portfolio", Blog: "blog homepage", Education: "course landing page" };
+const withArticle = (w) => (/^[aeiou]/i.test(w) ? "an " : "a ") + w;
 const refOf = (s) => s.url || "a saved screenshot (no public link)";
 
 function promptFor(s) {
   const kind = PAGE_KIND[s.category] || "landing page";
   return [
-    `Design a ${kind} in the style of "${s.title}" (reference: ${refOf(s)}).`,
+    `Design ${withArticle(kind)} in the style of "${s.title}" (reference: ${refOf(s)}).`,
     ``,
     `Reference in one line: ${s.description}`,
     ``,
@@ -601,7 +613,7 @@ function briefFor(s) {
     `Take from it:`,
     ...s.tags.map((t) => `- ${TAG_NOTES[t] ? TAG_NOTES[t][0].toUpperCase() + TAG_NOTES[t].slice(1) : t}`),
     ``,
-    `Deliverable: a ${PAGE_KIND[s.category] || "landing page"} that borrows this direction without copying its content or branding.`
+    `Deliverable: ${withArticle(PAGE_KIND[s.category] || "landing page")} that borrows this direction without copying its content or branding.`
   ].join("\n");
 }
 
