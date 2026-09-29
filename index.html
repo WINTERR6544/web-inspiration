@@ -204,10 +204,9 @@ main .wrap { padding-block: 28px 64px; }
 .cat { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
 .date { font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .card h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.2; margin: 0; padding-right: 36px; }
-.card h2 a { color: inherit; text-decoration: none; }
-.card h2 a::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: var(--radius); }
-.card h2 a:focus-visible { outline: none; }
-.card h2 a:focus-visible::after { outline: 2px solid var(--accent); outline-offset: -2px; }
+.card .open { all: unset; cursor: pointer; }
+.card .open::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: var(--radius); }
+.card .open:focus-visible::after { outline: 2px solid var(--accent); outline-offset: -2px; }
 .desc { margin: 0; color: var(--muted); font-size: 14px; }
 .domain { font-family: var(--font-mono); font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
 .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
@@ -229,11 +228,62 @@ main .wrap { padding-block: 28px 64px; }
 .fav.pop svg { animation: pop .35s ease; }
 @keyframes pop { 40% { transform: scale(1.35); } }
 
+/* Enlarged view */
+.modal {
+  width: min(960px, calc(100% - 32px)); max-height: calc(100% - 32px); padding: 0;
+  border: 1px solid var(--line); border-radius: 18px; background: var(--surface); color: var(--fg);
+  box-shadow: 0 30px 80px -20px rgba(10, 10, 40, .5); overflow: auto;
+}
+.modal::backdrop { background: rgba(10, 11, 20, .55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.modal[open] { animation: rise .28s cubic-bezier(.2,.7,.3,1); }
+@keyframes rise { from { opacity: 0; transform: translateY(16px) scale(.98); } }
+.modal .preview { aspect-ratio: auto; min-height: 240px; }
+.modal .preview.shot img { height: auto; max-height: 52vh; object-fit: contain; background: var(--c); }
+.modal .preview:not(.shot) { aspect-ratio: 16 / 9; }
+.modal .preview:not(.shot) .word { font-size: clamp(32px, 6vw, 56px); }
+.modal .preview:not(.shot) .mock { inset: 48px 32px 32px; gap: 12px; }
+.modal-close {
+  position: absolute; z-index: 3; right: 12px; top: 12px; width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; font-size: 20px; line-height: 1;
+  background: color-mix(in srgb, var(--surface) 88%, transparent); color: var(--fg); box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.modal .fav { right: 56px; }
+.modal-body { padding: 22px 24px 26px; display: grid; gap: 14px; }
+.modal-body h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.2rem); letter-spacing: -0.03em; line-height: 1.1; margin: 0; text-wrap: balance; }
+.modal-body .desc { font-size: 15px; max-width: 65ch; }
+.swatch { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); text-transform: uppercase; }
+.swatch i { width: 14px; height: 14px; border-radius: 4px; background: var(--c); border: 1px solid var(--line); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--surface); font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; color: var(--fg);
+  transition: border-color .15s, background .15s;
+}
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.copy-out {
+  margin: 0; padding: 14px 16px; border-radius: 12px; background: var(--chip); color: var(--fg);
+  font-family: var(--font-mono); font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere;
+  max-height: 240px; overflow: auto;
+}
+.copy-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.toast {
+  position: fixed; z-index: 50; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px);
+  background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-size: 14px; font-weight: 500;
+  opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
 .empty { text-align: center; padding: 64px 16px; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius); }
 .empty strong { display: block; font-family: var(--font-display); font-size: 1.4rem; color: var(--fg); margin-bottom: 6px; }
 .empty button { margin-top: 14px; border: 0; background: var(--accent); color: var(--on-accent); border-radius: 999px; padding: 8px 18px; font-weight: 600; cursor: pointer; }
 
 @media (max-width: 560px) {
+  .modal { width: 100%; max-width: 100%; max-height: 92%; margin: auto 0 0; border-radius: 18px 18px 0 0; }
+  .modal-body { padding: 18px 16px calc(22px + env(safe-area-inset-bottom, 0px)); }
+  .modal .preview { min-height: 0; }
+  .actions .btn { flex: 1 1 auto; justify-content: center; }
   .masthead { padding-block: 28px 18px; }
   .toolbar { position: static; }
   .filter-group { flex-direction: column; gap: 6px; }
@@ -305,6 +355,28 @@ main .wrap { padding-block: 28px 64px; }
     </div>
   </div>
 </main>
+
+<dialog class="modal" id="modal" aria-labelledby="mTitle">
+  <div id="mPreview"></div>
+  <button type="button" class="modal-close" id="mClose" aria-label="Close">×</button>
+  <button type="button" class="fav" id="mFav" aria-pressed="false" aria-label="Add to favorites">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8.2 3.4 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.6 0 5.5 3.7 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>
+  </button>
+  <div class="modal-body">
+    <div class="meta"><span class="cat" id="mCat"></span><span class="date" id="mDate"></span></div>
+    <h2 id="mTitle"></h2>
+    <p class="desc" id="mDesc"></p>
+    <div class="row"><span class="swatch" id="mSwatch"><i></i><span></span></span><div class="tags" id="mTags"></div></div>
+    <div class="actions">
+      <button type="button" class="btn primary" id="copyPrompt">Copy prompt</button>
+      <button type="button" class="btn" id="copyBrief">Copy brief</button>
+      <a class="btn" id="mVisit" target="_blank" rel="noopener noreferrer">Visit site ↗</a>
+    </div>
+    <span class="copy-label" id="copyLabel">Prompt</span>
+    <pre class="copy-out" id="copyOut" tabindex="0"></pre>
+  </div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 const SITES = [
@@ -400,13 +472,11 @@ function filtered() {
   return list;
 }
 
-function card(s) {
-  const key = keyOf(s);
-  const fav = state.favs.has(key);
+function previewHtml(s, eager) {
   const where = s.url ? esc(domain(s.url)) : "screenshot";
-  const preview = s.image
+  return s.image
     ? `<div class="preview shot" style="--c:${s.color};--ink:${inkFor(s.color)}">
-      <img src="${esc(s.image)}" alt="Screenshot of the ${esc(s.title)} design" loading="lazy" decoding="async">
+      <img src="${esc(s.image)}" alt="Screenshot of the ${esc(s.title)} design" loading="${eager ? "eager" : "lazy"}" decoding="async">
     </div>`
     : `<div class="preview" style="--c:${s.color};--ink:${inkFor(s.color)}" aria-hidden="true">
       <div class="bar"><i></i><i></i><i></i><span>${where}</span></div>
@@ -418,9 +488,14 @@ function card(s) {
       </div>
       <span class="hex">${esc(s.color)}</span>
     </div>`;
-  const title = s.url
-    ? `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}</a>`
-    : esc(s.title);
+}
+
+function card(s) {
+  const key = keyOf(s);
+  const fav = state.favs.has(key);
+  const where = s.url ? esc(domain(s.url)) : "screenshot";
+  const preview = previewHtml(s);
+  const title = `<button type="button" class="open" data-key="${esc(key)}" aria-haspopup="dialog">${esc(s.title)}</button>`;
   return `<article class="card">
     ${preview}
     <button type="button" class="fav" data-key="${esc(key)}" aria-pressed="${fav}" aria-label="${fav ? "Remove" : "Add"} ${esc(s.title)} ${fav ? "from" : "to"} favorites">
@@ -430,7 +505,7 @@ function card(s) {
       <div class="meta"><span class="cat">${esc(s.category)}</span><span class="date" title="Added to collection">${fmtDate(s.added)}</span></div>
       <h2>${title}</h2>
       <p class="desc">${esc(s.description)}</p>
-      <span class="domain">${s.url ? where + " ↗" : "Screenshot · no link yet"}</span>
+      <span class="domain">${s.url ? where : "Screenshot · no link yet"}</span>
       <div class="tags">${s.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>
     </div>
   </article>`;
@@ -463,15 +538,150 @@ $("favOnly").addEventListener("change", (e) => { state.favOnly = e.target.checke
 $("clear").addEventListener("click", clearFilters);
 $("emptyClear").addEventListener("click", clearFilters);
 
-$("grid").addEventListener("click", (e) => {
-  const btn = e.target.closest(".fav");
-  if (!btn) return;
-  const key = btn.dataset.key;
+function toggleFav(key) {
   state.favs.has(key) ? state.favs.delete(key) : state.favs.add(key);
   write(STORE_FAV, [...state.favs]);
   render();
+}
+
+$("grid").addEventListener("click", (e) => {
+  const open = e.target.closest(".open");
+  if (open) { openModal(open.dataset.key, open); return; }
+  const btn = e.target.closest(".fav");
+  if (!btn) return;
+  const key = btn.dataset.key;
+  toggleFav(key);
   const again = $("grid").querySelector(`.fav[data-key="${CSS.escape(key)}"]`);
   if (again) { again.classList.add("pop"); again.focus(); }
+});
+
+// What each style tag asks a designer to carry over.
+const TAG_NOTES = {
+  minimal: "restraint: few colors, lots of whitespace, every element earns its place",
+  dark: "dark surfaces with light type and careful contrast",
+  brutalist: "raw structure, hard edges, visible grid and default-feeling type",
+  playful: "unexpected shapes, friendly motion and personality in the details",
+  editorial: "magazine-grade type hierarchy and long-form reading rhythm",
+  colorful: "bold, saturated color used as a structural element",
+  motion: "purposeful animation and scroll choreography",
+  "3D": "rendered 3D objects or depth as the focal point",
+  illustrated: "custom illustration carrying the brand voice"
+};
+const PAGE_KIND = { SaaS: "product landing page", "E-commerce": "online store homepage", Agency: "studio homepage", Portfolio: "personal portfolio", Blog: "blog homepage", Education: "course landing page" };
+const refOf = (s) => s.url || "a saved screenshot (no public link)";
+
+function promptFor(s) {
+  const kind = PAGE_KIND[s.category] || "landing page";
+  return [
+    `Design a ${kind} in the style of "${s.title}" (reference: ${refOf(s)}).`,
+    ``,
+    `Reference in one line: ${s.description}`,
+    ``,
+    `Visual direction:`,
+    ...s.tags.map((t) => `- ${t}: ${TAG_NOTES[t] || t}`),
+    `- Key color: ${s.color.toUpperCase()}, used as the dominant tone, with neutrals tuned to it.`,
+    ``,
+    `Requirements: responsive down to 375px, generous spacing, a clear type scale, smooth hover states and accessible contrast.`,
+    `Match the mood, layout ideas and craft of the reference, but use original copy, imagery and branding.`
+  ].join("\n");
+}
+
+function briefFor(s) {
+  return [
+    `DESIGN BRIEF: ${s.title}`,
+    ``,
+    `Reference: ${refOf(s)}`,
+    `Category: ${s.category}`,
+    `Style: ${s.tags.join(", ")}`,
+    `Key color: ${s.color.toUpperCase()}`,
+    ``,
+    `What it does well:`,
+    s.description,
+    ``,
+    `Take from it:`,
+    ...s.tags.map((t) => `- ${TAG_NOTES[t] ? TAG_NOTES[t][0].toUpperCase() + TAG_NOTES[t].slice(1) : t}`),
+    ``,
+    `Deliverable: a ${PAGE_KIND[s.category] || "landing page"} that borrows this direction without copying its content or branding.`
+  ].join("\n");
+}
+
+const modal = $("modal");
+let current = null;
+let lastOpener = null;
+
+function showCopy(kind) {
+  const text = kind === "brief" ? briefFor(current) : promptFor(current);
+  $("copyOut").textContent = text;
+  $("copyLabel").textContent = kind === "brief" ? "Brief" : "Prompt";
+  $("copyPrompt").classList.toggle("primary", kind !== "brief");
+  $("copyBrief").classList.toggle("primary", kind === "brief");
+  return text;
+}
+
+function syncModalFav() {
+  const on = state.favs.has(keyOf(current));
+  $("mFav").setAttribute("aria-pressed", on);
+  $("mFav").setAttribute("aria-label", `${on ? "Remove" : "Add"} ${current.title} ${on ? "from" : "to"} favorites`);
+}
+
+function openModal(key, opener) {
+  current = SITES.find((s) => keyOf(s) === key);
+  if (!current) return;
+  lastOpener = opener || null;
+  $("mPreview").innerHTML = previewHtml(current, true);
+  $("mCat").textContent = current.category;
+  $("mDate").textContent = "Added " + fmtDate(current.added);
+  $("mTitle").textContent = current.title;
+  $("mDesc").textContent = current.description;
+  $("mSwatch").style.setProperty("--c", current.color);
+  $("mSwatch").querySelector("span").textContent = current.color;
+  $("mTags").innerHTML = current.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("");
+  $("mVisit").hidden = !current.url;
+  if (current.url) $("mVisit").href = current.url;
+  syncModalFav();
+  showCopy("prompt");
+  if (typeof modal.showModal === "function") modal.showModal(); else modal.setAttribute("open", "");
+  $("mClose").focus();
+}
+
+function closeModal() {
+  if (modal.open) modal.close ? modal.close() : modal.removeAttribute("open");
+}
+modal.addEventListener("close", () => {
+  if (lastOpener && document.contains(lastOpener)) lastOpener.focus();
+});
+$("mClose").addEventListener("click", closeModal);
+modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+
+let toastTimer;
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+function copy(kind) {
+  const text = showCopy(kind);
+  const label = kind === "brief" ? "Brief" : "Prompt";
+  const selectFallback = () => {
+    const range = document.createRange();
+    range.selectNodeContents($("copyOut"));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    toast(`${label} selected. Press Ctrl+C or Cmd+C to copy.`);
+  };
+  try {
+    navigator.clipboard.writeText(text).then(() => toast(`${label} copied`), selectFallback);
+  } catch { selectFallback(); }
+}
+$("copyPrompt").addEventListener("click", () => copy("prompt"));
+$("copyBrief").addEventListener("click", () => copy("brief"));
+
+$("mFav").addEventListener("click", () => {
+  toggleFav(keyOf(current));
+  syncModalFav();
+  $("mFav").classList.remove("pop"); void $("mFav").offsetWidth; $("mFav").classList.add("pop");
 });
 
 // Theme: follows the system until the user picks one, then remembers it.
