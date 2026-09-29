@@ -423,7 +423,18 @@ const SITES = [
   { title: "Font Previewer", url: "https://fontwidget.com", category: "SaaS", tags: ["minimal", "brutalist"], description: "A bookmarklet page that is barely styled on purpose: one narrow column of black text on white, a single outlined button and numbered steps.", color: "#ffffff", image: "images/font-previewer.jpg", added: "2026-09-29" },
   { title: "Maison des Elites", url: "https://mdebeauty.com", category: "E-commerce", tags: ["minimal", "editorial", "3D"], description: "Luxury skincare opening on three moody product renders in gold, then an ivory section with art nouveau line ornaments.", color: "#f3ede4", image: "images/maison-des-elites.jpg", added: "2026-09-29" },
   { title: "DRĄSA Studio", url: "https://drasa.uk", category: "Agency", tags: ["colorful", "brutalist", "playful"], description: "Flat hot pink page with giant custom black letterforms spelling the name, and a pill-shaped nav docked at the bottom.", color: "#ff48a4", image: "images/drasa.jpg", added: "2026-09-29" },
-  { title: "Brandon Yasin", url: "https://brandonyasin.com", category: "Portfolio", tags: ["minimal", "editorial"], description: "Creative director portfolio on warm off-white: small caps labels, a signature logo and tall photo columns for each client.", color: "#f6f4f0", image: "images/brandon-yasin.jpg", added: "2026-09-29" }
+  { title: "Brandon Yasin", url: "https://brandonyasin.com", category: "Portfolio", tags: ["minimal", "editorial"], description: "Creative director portfolio on warm off-white: small caps labels, a signature logo and tall photo columns for each client.", color: "#f6f4f0", image: "images/brandon-yasin.jpg", added: "2026-09-29" },
+  // Fantasy and gaming, found online on 2026-09-29 (Awwwards Games & Entertainment plus official game sites). Colors are approximate placeholders.
+  { title: "ELDEN RING", url: "https://en.bandainamcoent.eu/elden-ring/elden-ring", category: "Gaming", tags: ["fantasy", "dark", "editorial"], description: "FromSoftware's action RPG on near-black with antique gold accents, ornamental leaf borders and huge atmospheric landscapes.", color: "#17140f", added: "2026-09-29" },
+  { title: "Baldur's Gate 3", url: "https://baldursgate3.game", category: "Gaming", tags: ["fantasy", "dark", "motion"], description: "Larian's D&D epic sold through cinematic hero video and character art in deep purples and blacks.", color: "#1d1025", added: "2026-09-29" },
+  { title: "Hades II", url: "https://www.supergiantgames.com/games/hades-ii/", category: "Gaming", tags: ["fantasy", "dark", "illustrated"], description: "Supergiant's witchy roguelike: high-contrast painted art of the heroine on dark ground, trailers and review quotes.", color: "#1f1530", added: "2026-09-29" },
+  { title: "Hollow Knight: Silksong", url: "https://hollowknightsilksong.com", category: "Gaming", tags: ["fantasy", "dark", "illustrated"], description: "Moody gothic page built on hand-drawn 2D art of gilded cities, lakes of fire and misted moors.", color: "#1c1512", added: "2026-09-29" },
+  { title: "Genshin Impact", url: "https://genshin.hoyoverse.com/en/", category: "Gaming", tags: ["fantasy", "colorful", "illustrated"], description: "Open-world anime fantasy RPG whose site is led by full-screen character art and each version update's campaign.", color: "#34476a", added: "2026-09-29" },
+  { title: "FINAL FANTASY XIV", url: "https://na.finalfantasyxiv.com", category: "Gaming", tags: ["fantasy", "dark"], description: "Square Enix's MMO with dark blue-black hero imagery of armored warriors, ornate title type and clear trial calls to action.", color: "#0d1626", added: "2026-09-29" },
+  { title: "Splattered Ink Games", url: "https://splatteredink.com", category: "Gaming", tags: ["fantasy", "dark", "illustrated"], description: "Tabletop RPG shop where dramatic creature and monster art on dark backgrounds does the selling.", color: "#151515", added: "2026-09-29" },
+  { title: "Meet Your Psychic Tarot", url: "https://tarot.meetyourpsychic.com", category: "Gaming", tags: ["fantasy", "dark", "motion"], description: "Animated tarot readings in deep purple with candlelight and ornate card symbolism. A good mystical mood reference.", color: "#1a1438", added: "2026-09-29" },
+  { title: "Hogwarts Story", url: "https://hogwartsstory.tilda.ws", category: "Gaming", tags: ["fantasy", "dark", "editorial"], description: "Fan-made guide to the wizarding school's founders, classes and creatures, in a dark academia layout.", color: "#2a2018", added: "2026-09-29" },
+  { title: "Undead Fish", url: "https://undead-fish.com/en", category: "Gaming", tags: ["playful", "dark"], description: "Oslo studio whose homepage is a pixel-art town you walk through with the arrow keys, with a normal site as a fallback.", color: "#14161c", added: "2026-09-29" }
 ];
 
 const STORE_FAV = "webinsp:favorites";
@@ -576,9 +587,10 @@ const TAG_NOTES = {
   colorful: "bold, saturated color used as a structural element",
   motion: "purposeful animation and scroll choreography",
   "3D": "rendered 3D objects or depth as the focal point",
-  illustrated: "custom illustration carrying the brand voice"
+  illustrated: "custom illustration carrying the brand voice",
+  fantasy: "a mythic, otherworldly mood: rich lore-driven art, ornamental details and dramatic lighting"
 };
-const PAGE_KIND = { Brand: "brand homepage", Experience: "interactive web experience", SaaS: "product landing page", "E-commerce": "online store homepage", Agency: "studio homepage", Portfolio: "personal portfolio", Blog: "blog homepage", Education: "course landing page" };
+const PAGE_KIND = { Gaming: "game website", Brand: "brand homepage", Experience: "interactive web experience", SaaS: "product landing page", "E-commerce": "online store homepage", Agency: "studio homepage", Portfolio: "personal portfolio", Blog: "blog homepage", Education: "course landing page" };
 const withArticle = (w) => (/^[aeiou]/i.test(w) ? "an " : "a ") + w;
 const refOf = (s) => s.url || "a saved screenshot (no public link)";
 
