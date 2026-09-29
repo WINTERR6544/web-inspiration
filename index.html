@@ -427,7 +427,16 @@ const SITES = [
   // Fantasy gaming, found online on 2026-09-29; PP kept these three and sent the screenshots.
   { title: "ELDEN RING", url: "https://en.bandainamcoent.eu/elden-ring/elden-ring", category: "Gaming", tags: ["fantasy", "dark", "editorial"], description: "A glowing gold rune over a misty teal landscape, a weathered serif wordmark and a gold Buy Now button on a black nav.", color: "#0f1a1c", image: "images/elden-ring.jpg", added: "2026-09-29" },
   { title: "Baldur's Gate 3", url: "https://baldursgate3.game", category: "Gaming", tags: ["fantasy", "dark", "motion"], description: "Crimson and pink cinematic video with an ornate gold logo, serif caps nav and filigree-framed buttons.", color: "#5a1420", image: "images/baldurs-gate-3.jpg", added: "2026-09-29" },
-  { title: "Hollow Knight: Silksong", url: "https://hollowknightsilksong.com", category: "Gaming", tags: ["fantasy", "dark", "illustrated"], description: "Hand-drawn key art in fiery reds behind a flourished serif logo, then plain black sections for the story.", color: "#3a120c", image: "images/silksong.jpg", added: "2026-09-29" }
+  { title: "Hollow Knight: Silksong", url: "https://hollowknightsilksong.com", category: "Gaming", tags: ["fantasy", "dark", "illustrated"], description: "Hand-drawn key art in fiery reds behind a flourished serif logo, then plain black sections for the story.", color: "#3a120c", image: "images/silksong.jpg", added: "2026-09-29" },
+  // Valorant fantasy league references, found online on 2026-09-29. Colors are approximate placeholders.
+  { title: "Fantasy Valorant", url: "https://fantasy-valorant.com", category: "Fantasy esports", tags: ["dark", "data"], description: "Fan-made fantasy league for VCT: draft pro Valorant players, then compete weekly in your league on points from real matches. The closest thing to what you're building.", color: "#0f1923", added: "2026-09-29" },
+  { title: "HLTV Fantasy", url: "https://www.hltv.org/fantasy", category: "Fantasy esports", tags: ["dark", "data"], description: "Counter-Strike fantasy from the biggest CS stats site: draft a team, then play friends in a closed league or chase the global leaderboard.", color: "#2d3844", added: "2026-09-29" },
+  { title: "VLR.gg", url: "https://www.vlr.gg", category: "Fantasy esports", tags: ["data", "brutalist"], description: "The go-to Valorant results and player stats site. Dense match tables and stat pages to study for your player cards and scoring.", color: "#2f3337", added: "2026-09-29" },
+  { title: "E-GO", url: "https://www.egoapp.gg", category: "Fantasy esports", tags: ["minimal", "data"], description: "Esports app combining schedules, streams and stats with a fantasy mode: build lineups, score on real performances, climb global leaderboards.", color: "#0066ff", added: "2026-09-29" },
+  { title: "Sleeper", url: "https://sleeper.com", category: "Fantasy esports", tags: ["dark", "data", "playful"], description: "Fantasy sports app known for its friendly dark UI: live scores, standings, leagues, pick'em and survivor games in modular sections.", color: "#18202f", added: "2026-09-29" },
+  { title: "Sorare", url: "https://sorare.com", category: "Fantasy esports", tags: ["dark", "data", "3D"], description: "Fantasy built on collectible player cards on near-black. The reference for making drafted players feel like cards you own.", color: "#101010", added: "2026-09-29" },
+  { title: "VALORANT", url: "https://playvalorant.com/en-us/", category: "Gaming", tags: ["dark", "minimal", "motion"], description: "Riot's official site: high-contrast condensed type, sharp geometric layouts and ability video. The brand language to borrow.", color: "#ff4655", added: "2026-09-29" },
+  { title: "VALORANT Esports", url: "https://valorantesports.com", category: "Fantasy esports", tags: ["dark", "data"], description: "Official VCT hub with the match schedule by date and stage, spoiler-safe click-to-reveal results and global power rankings.", color: "#0f1923", added: "2026-09-29" }
 ];
 
 const STORE_FAV = "webinsp:favorites";
@@ -581,9 +590,10 @@ const TAG_NOTES = {
   motion: "purposeful animation and scroll choreography",
   "3D": "rendered 3D objects or depth as the focal point",
   illustrated: "custom illustration carrying the brand voice",
+  data: "stats presented as the product: clear tables, leaderboards and live numbers that are easy to scan",
   fantasy: "a mythic, otherworldly mood: rich lore-driven art, ornamental details and dramatic lighting"
 };
-const PAGE_KIND = { Gaming: "game website", Brand: "brand homepage", Experience: "interactive web experience", SaaS: "product landing page", "E-commerce": "online store homepage", Agency: "studio homepage", Portfolio: "personal portfolio", Blog: "blog homepage", Education: "course landing page" };
+const PAGE_KIND = { "Fantasy esports": "fantasy esports league site", Gaming: "game website", Brand: "brand homepage", Experience: "interactive web experience", SaaS: "product landing page", "E-commerce": "online store homepage", Agency: "studio homepage", Portfolio: "personal portfolio", Blog: "blog homepage", Education: "course landing page" };
 const withArticle = (w) => (/^[aeiou]/i.test(w) ? "an " : "a ") + w;
 const refOf = (s) => s.url || "a saved screenshot (no public link)";
 
